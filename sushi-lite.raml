@@ -1,0 +1,237 @@
+#%RAML 0.8
+title: SUSHI-Lite
+baseUri: http://example.org/{version}
+version: v1
+mediaType: application/json
+documentation:
+  - title: Overview
+    content: Example RAML for JSON API for SUSHI access to COUNTER Code of Practice reports
+
+/GetReport:
+  get:
+    description: Request a report
+    queryParameters:
+      Report:
+        type: string
+        required: true
+        description: |
+          The short name of the COUNTER report (e.g., JR1, BR1, BR2, AR1, etc.). This will determine the nature of data to be returned. For example, a JR report will return journal-level usage and an AR report will retrieve article-level usage. View the SUSHI report registry for more information: http://www.niso.org/workrooms/sushi/registry/#reports.
+      Release:
+        type: string
+        example: 4
+        default: 4
+        required: true
+      RequestorID:
+        type: string
+        example: 0000001
+        required: false
+      CustomerID:
+        type: string
+        example: 0000002
+        required: false
+
+      # Filter_list Parameters
+      BeginDate:
+        type: string
+        example: 2015-02-15
+        required: false
+      EndDate:
+        type: string
+        example: 2015-03-01
+        required: false
+      ItemIdentifier:
+        type: string
+        example: journal:issn:1111-1111|journal:issn:2222-2222
+        required: false
+      ItemContributor:
+        type: string
+        example: author:orcid:0000-0002-8721-8082
+        required: false
+      ResourceType:
+        type: string
+        example: Book
+        required: false
+      Publisher:
+        type: string
+        example: University of Example Press
+        required: false
+      Platform:
+        type: string
+        example: Platform1
+        required: false
+      MetricTypes:
+        type: string
+        example: ft_total|ft_html
+        required: false
+      PubYr:
+        type: string
+        example: 2001
+        required: false
+      PubYrFrom:
+        type: string
+        example: 1997
+        required: false
+      PubYrTo:
+        type: string
+        example: 2015
+        required: false
+      IsArchive:
+        type: boolean
+        example: false
+        required: false
+
+      # ReportAttributes_list Parameters
+      Granularity: 
+        type: string
+        example: Yearly
+        required: false
+      ExcludeZeroUsage:
+        type: boolean
+        example: true
+        required: false
+        default: true
+      Format:
+        type: string
+        example: XML
+        required: false
+        default: JSON
+      Callback:
+        type: string
+        required: false
+      Limit:
+        type: integer
+        example: 1000
+        required: false
+      Offset:
+        type: integer
+        example: 20
+        required: false
+        default: 1
+      OrderBy:
+        type: string
+        example: ft_total:desc
+        required: false
+        default: ItemName:asc
+
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "Request": {
+                  "Report": "IR1",
+                  "RequestorID": "Jisc",
+                  "CustomerID": "000008",
+                  "Filters": {
+                    "DateRange": {
+                      "BeginDate": "2013-01",
+                      "EndDate": "2013-03"
+                    },
+                    "ItemIdentifier": "irusid::22215|21800"
+                  },
+                  "ReportAttributes": {
+                    "Granularity": "Monthly"
+                  },
+                  "Created": "2016-06-09 13:05:05+00:00"
+                },
+                "Report": {
+                  "Vendor": "IRUS-UK",
+                  "ReportItems": [
+                    {
+                      "ParentItem": [
+                        {
+                          "ItemName": "Insights: the UKSG journal",
+                          "ItemIdentifier": [
+                            {
+                              "Type": "Online_ISSN",
+                              "Value": "2048-7754"
+                            }
+                          ],
+                          "ItemDataType": "Journal"
+                        }
+                      ],
+                      "ItemIdentifier": [
+                        {
+                          "Type": "URL",
+                          "Value": "http:\/\/eprints.hud.ac.uk\/15105\/"
+                        },
+                        {
+                          "Type": "DOI",
+                          "Value": "10.1629\/2048-7754.25.3.262"
+                        },
+                        {
+                          "Type": "OAI",
+                          "Value": "oai:eprints.hud.ac.uk:15105"
+                        },
+                        {
+                          "Type": "IRUSID",
+                          "Value": "21800"
+                        }
+                      ],
+                      "ItemPublisher": "University of Huddersfield Repository",
+                      "ItemPlatform": "University of Huddersfield Repository",
+                      "ItemDataType": "Article",
+                      "ItemName": "IRUS-UK: making scholarly statistics count in UK repositories",
+                      "ItemPerformance": {
+                        "2013-01": {
+                          "ft_total": "4"
+                        },
+                        "2013-02": {
+                          "ft_total": "3"
+                        },
+                        "2013-03": {
+                          "ft_total": "2"
+                        }
+                      }
+                    },
+                    {
+                      "ParentItem": [
+                        {
+                          "ItemName": "Insights: the UKSG journal",
+                          "ItemIdentifier": [
+                            {
+                              "Type": "Online_ISSN",
+                              "Value": "2048-7754"
+                            }
+                          ],
+                          "ItemDataType": "Journal"
+                        }
+                      ],
+                      "ItemIdentifier": [
+                        {
+                          "Type": "URL",
+                          "Value": "http:\/\/dspace.lib.cranfield.ac.uk\/handle\/1826\/7643"
+                        },
+                        {
+                          "Type": "DOI",
+                          "Value": "10.1629\/2048-7754.25.3.262"
+                        },
+                        {
+                          "Type": "OAI",
+                          "Value": "oai:dspace.lib.cranfield.ac.uk:1826\/7643"
+                        },
+                        {
+                          "Type": "IRUSID",
+                          "Value": "22215"
+                        }
+                      ],
+                      "ItemPublisher": "Cranfield University CERES",
+                      "ItemPlatform": "Cranfield University CERES",
+                      "ItemDataType": "Article",
+                      "ItemName": "IRUS-UK: making scholarly statistics count in UK repositories",
+                      "ItemPerformance": {
+                        "2013-01": {
+                          "ft_total": "5"
+                        },
+                        "2013-02": {
+                          "ft_total": "4"
+                        },
+                        "2013-03": {
+                          "ft_total": "14"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
